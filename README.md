@@ -1,14 +1,56 @@
+# 🏥 Cabinet Médical - Plateforme Web
 
-Ce projet consiste à développer une plateforme web complète dédiée à la gestion d’un cabinet médical. Le système centralise toutes les opérations du cabinet : gestion des patients, prise de rendez-vous, communication interne et suivi des activités.
+Ce projet consiste à développer une **plateforme web complète** dédiée à la gestion d’un cabinet médical.  
+Le système centralise toutes les opérations du cabinet : gestion des patients, prise de rendez-vous, communication interne et suivi des activités.
 
-La plateforme offre trois espaces sécurisés :
+---
 
-Médecin : gère les patients, les rendez-vous, répond aux questions et accède aux statistiques du cabinet.
+## 🎯 Objectifs du projet
 
-Secrétaire médicale : assure la gestion administrative (agenda, dossiers patients, validation des rendez-vous).
+- Centraliser la gestion du cabinet médical.
+- Offrir une interface sécurisée pour chaque type d’utilisateur.
+- Simplifier la communication et le suivi des activités.
 
-Patient : crée son compte, prend rendez-vous, pose des questions et consulte son historique médical.
+---
 
-link Figma:
-Link Jira:https://khawlasaber06.atlassian.net/jira/software/projects/CM/boards/5/backlog?epics=visible
-link UML:
+## 👥 Espaces Utilisateurs
+
+### 🩺 Médecin
+- Gère les patients et les rendez-vous.
+- Répond aux questions des patients.
+- Accède aux statistiques du cabinet.
+
+### 🗂 Secrétaire médicale
+- Assure la gestion administrative.
+- Gère l’agenda et les dossiers patients.
+- Valide et organise les rendez-vous.
+
+### 👤 Patient
+- Crée son compte et gère son profil.
+- Prend des rendez-vous.
+- Pose des questions et consulte son historique médical.
+
+---
+
+## 🔗 Liens Importants
+
+- **Figma (Design UI/UX)** : [Lien Figma](#)  
+- **Jira (Gestion de projet)** : [Lien Jira](https://khawlasaber06.atlassian.net/jira/software/projects/CM/boards/5/backlog?epics=visible)  
+- **UML (Diagrammes et structure)** : [Lien UML](#)
+
+---
+
+## ⚙️ Technologies utilisées
+
+- **Frontend** : React, HTML, CSS, JavaScript  
+- **Backend** : Laravel, MySQL  
+- **Gestion de projet** : Jira  
+- **Design UI/UX** : Figma
+
+---
+
+## 🚀 Installation
+
+1. Cloner le dépôt :
+```bash
+git clone https://github.com/Saberkhawla-coder/Cabinet-Medical.git
