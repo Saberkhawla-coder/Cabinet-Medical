@@ -35,8 +35,9 @@ Le système centralise toutes les opérations du cabinet : gestion des patients,
 ## 🔗 Liens Importants
 
 - **Figma (Design UI/UX)** : [Lien Figma]()  
-- **Jira (Gestion de projet)** : [Lien Jira](https://khawlasaber06.atlassian.net/jira/software/projects/CM/boards/5/backlog?epics=visible)  
-- **UML (Diagrammes et structure)** : [Lien UML](https://lucid.app/lucidchart/c63d05e2-ebee-406e-836c-342f360827a8/edit?invitationId=inv_3a650b52-e012-44f4-9a2f-d58904e05439&page=.Q4MUjXso07N#)
+- **Jira (Gestion de projet)** : [Lien Jira](https://khawlasaber06.atlassian.net/jira/software/projects/CAB/boards/38/backlog)  
+- **UML (Diagrammes cas d'utilisation)** : [Lien UML](https://lucid.app/lucidchart/c63d05e2-ebee-406e-836c-342f360827a8/edit?invitationId=inv_3a650b52-e012-44f4-9a2f-d58904e05439&page=.Q4MUjXso07N#)
+**UML (Diagrammes de classe)** : [Lien UML](#)
 
 ---
 
