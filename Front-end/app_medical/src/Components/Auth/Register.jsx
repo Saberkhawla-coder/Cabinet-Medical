@@ -1,74 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { User, Lock, Mail } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../api/axios"; 
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser, resetRegister } from "../../redux/slices/Auth/registerSlice";
+import { toast } from 'sonner';
+import { Toaster } from 'sonner';
 
 function Register() {
-  const [hide, setHide] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error, success } = useSelector((state) => state.register);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     password_confirmation: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+
+  const [flipped, setFlipped] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      await api.post("/register", form); // Laravel endpoint
-      setLoading(false);
-      // animation then navigate
-      setHide(true);
-      setTimeout(() => navigate("/login"), 400);
-    } catch (err) {
-      setLoading(false);
-      if (err.response) {
-        setError(err.response.data.message || "Registration failed");
-      } else {
-        setError("Network Error");
-      }
-    }
+    dispatch(registerUser(form));
   };
 
-  const goLogin = (e) => {
-    e.preventDefault();
-    setHide(true);
-    setTimeout(() => navigate("/login"), 400);
-  };
+useEffect(() => {
+  if (error) {
+    toast.error(error);
+  }
+
+  if (success) {
+    toast.success("Inscription réussie ! Vous pouvez vous connecter.");
+    const navigateTimer = setTimeout(() => {
+      dispatch(resetRegister());
+      navigate("/login");
+    }, 1000);
+
+    return () => clearTimeout(navigateTimer);
+  }
+}, [success, error, dispatch, navigate]);
+useEffect(() => {
+  const flipTimer = setTimeout(() => setFlipped(true), 0);
+  return () => clearTimeout(flipTimer);
+}, []);
+
+
 
   return (
-    <div className="bg-[#0f172a] flex justify-center items-center min-h-screen">
-      <div className="relative w-[900px] h-[450px] rounded-2xl overflow-hidden shadow-[0_0_40px_#0ea5e9] bg-[#0f172a] grid grid-cols-2">
-
-       
-        <div
-          className={`relative bg-gradient-to-br from-sky-500 to-cyan-600 flex items-center justify-center
-            transition-all duration-400 ease-in-out
-            ${hide ? "-translate-x-full opacity-0" : ""}`}
-        >
-          <div className="absolute inset-0 bg-black/20" />
-          <h1 className="text-4xl font-bold text-white z-10">WELCOME!</h1>
-        </div>
-
-        
+    <div className="flex justify-center items-center min-h-screen flex-col bg-gray-100 perspective">
+       <Link to="/" className="font-bold text-3xl p-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">
+                    Health<span className="">Care</span>
+        </Link>
+      <div
+        className={`relative w-[900px] h-[450px] rounded-2xl shadow-2xl grid grid-cols-2 transition-transform duration-1000 ease-in-out transform ${
+          flipped ? "rotate-y-0" : "rotate-y-180"
+        }`}
+      >
+        {/* Front */}
         <form
           onSubmit={handleSubmit}
-          className={`p-12 flex flex-col justify-center gap-4 z-10
-            transition-all duration-400 ease-in-out
-            ${hide ? "translate-x-full opacity-0" : ""}`}
+          className="bg-white p-12 flex flex-col justify-center gap-4 z-10"
         >
-          <h1 className="text-3xl font-bold text-white text-center">Register</h1>
-
+          <h1 className="text-3xl font-bold text-sky-500 text-center">
+            Register
+          </h1>
           {error && <p className="text-red-500 text-center">{error}</p>}
 
           <div className="relative">
@@ -79,10 +79,11 @@ function Register() {
               placeholder="Username"
               value={form.name}
               onChange={handleChange}
-              className="w-full bg-transparent border-b border-sky-500 text-white py-2 pr-10 outline-none focus:border-sky-400"
+              className="w-full bg-transparent border-b border-sky-500 py-2 pr-10 outline-none"
               required
             />
           </div>
+
           <div className="relative">
             <Mail className="absolute right-3 top-3 text-sky-400" size={20} />
             <input
@@ -91,10 +92,11 @@ function Register() {
               placeholder="Email"
               value={form.email}
               onChange={handleChange}
-              className="w-full bg-transparent border-b border-sky-500 text-white py-2 pr-10 outline-none focus:border-sky-400"
+              className="w-full bg-transparent border-b border-sky-500 py-2 pr-10 outline-none"
               required
             />
           </div>
+
           <div className="relative">
             <Lock className="absolute right-3 top-3 text-sky-400" size={20} />
             <input
@@ -103,10 +105,11 @@ function Register() {
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              className="w-full bg-transparent border-b border-sky-500 text-white py-2 pr-10 outline-none focus:border-sky-400"
+              className="w-full bg-transparent border-b border-sky-500 py-2 pr-10 outline-none"
               required
             />
           </div>
+
           <div className="relative">
             <Lock className="absolute right-3 top-3 text-sky-400" size={20} />
             <input
@@ -115,7 +118,7 @@ function Register() {
               placeholder="Confirm Password"
               value={form.password_confirmation}
               onChange={handleChange}
-              className="w-full bg-transparent border-b border-sky-500 text-white py-2 pr-10 outline-none focus:border-sky-400"
+              className="w-full bg-transparent border-b border-sky-500 py-2 pr-10 outline-none"
               required
             />
           </div>
@@ -123,21 +126,23 @@ function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 bg-gradient-to-r from-sky-400 to-cyan-500 text-white py-2 rounded-full font-medium hover:opacity-90 transition"
+            className="mt-4 bg-gradient-to-r from-blue-600 to-teal-500 text-white py-2 rounded-full font-medium hover:opacity-90 transition"
           >
             {loading ? "Registering..." : "Register"}
           </button>
 
           <p className="text-gray-400 text-sm text-center">
             Already have an account?{" "}
-            <Link onClick={goLogin} className="text-sky-400 hover:underline">
+            <Link to="/login" className="text-sky-400 hover:underline">
               Sign In
             </Link>
           </p>
         </form>
 
-        
-        <div className="absolute left-1/2 top-0 h-full w-42 bg-[#0f172a] transform skew-x-[-20deg] origin-top"></div>
+        {/* Back / animation side */}
+        <div className="relative bg-gradient-to-r from-blue-600 to-teal-500 flex items-center justify-center">
+          <h1 className="text-4xl font-bold text-white z-10">WELCOME!</h1>
+        </div>
       </div>
     </div>
   );
