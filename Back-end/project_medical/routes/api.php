@@ -45,10 +45,11 @@ Route::post('/contacts/read-all', [ContactController::class, 'markAllRead']);
 Route::get('/patients', [patientController::class, 'index']);
 
 
-
-Route::get('/appointments', [AppointmentController::class, 'index']);
-Route::post('/appointments', [AppointmentController::class, 'store']);
-Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy']);
-Route::put('/appointments/{id}', [AppointmentController::class, 'update']);
-
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/appointments', [AppointmentController::class, 'index']);
+    Route::post('/appointments', [AppointmentController::class, 'store']);
+    Route::get('/appointments/my', [AppointmentController::class, 'my']);
+    Route::put('/appointments/{id}', [AppointmentController::class, 'update']);
+    Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy']);
+});
 
