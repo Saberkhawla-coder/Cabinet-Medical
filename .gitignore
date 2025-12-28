@@ -1,0 +1,12 @@
+# Ignorer toutes les vidéos
+Front-end/app_medical/public/videos/
+
+# Ignorer certaines images lourdes
+Front-end/app_medical/public/images/Healthy/*.jpg
+Front-end/app_medical/public/images/HomeAnimation/*.jpg
+Front-end/app_medical/public/images/diseases/*.jpg
+# Ignorer les fichiers temporaires ou système
+*.log
+*.tmp
+.DS_Store
+
