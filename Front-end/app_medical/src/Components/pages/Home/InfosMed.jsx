@@ -20,13 +20,13 @@ function InfosMed() {
 
         <div className="md:w-1/2 text-gray-800  flex flex-col justify-end ">
           <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-900 mb-6">
-            Qui nous sommes
+             Who We Are
           </h1>
 
           <p className="text-lg leading-relaxed mb-10 text-left">
-            Nous sommes un cabinet médical moderne qui allie soins de qualité et gestion simplifiée. 
-            Notre mission est de rendre le travail des professionnels plus efficace, 
-            tout en offrant un suivi optimal aux patients.
+            We are a modern medical center that combines quality care with simplified management.
+            Our mission is to make the work of healthcare professionals more efficient,
+            while ensuring optimal follow-up for patients.
           </p>
 
        
@@ -38,7 +38,7 @@ function InfosMed() {
                 <RiNumber1 size={32} className="text-gray-700 bg-gray-200 p-1 rounded-full" />
                 <div className="absolute left-1/2 -translate-x-1/2 top-8 w-0.5 h-10 bg-gray-300"></div>
               </div>
-              <span className="pt-1">Offrir des soins de qualité aux patients.</span>
+              <span className="pt-1">Providing high-quality care for patients.</span>
             </div>
 
          
@@ -47,7 +47,7 @@ function InfosMed() {
                 <RiNumber2 size={32} className="text-gray-700 bg-gray-200 p-1 rounded-full" />
                 <div className="absolute left-1/2 -translate-x-1/2 top-8 w-0.5 h-10 bg-gray-300"></div>
               </div>
-              <span className="pt-1">Simplifier la gestion du cabinet pour les professionnels.</span>
+              <span className="pt-1">Simplifying clinic management for professionals.</span>
             </div>
 
         
@@ -56,13 +56,13 @@ function InfosMed() {
                 <RiNumber3 size={32} className="text-gray-700 bg-gray-200 p-1 rounded-full" />
                 <div className="absolute left-1/2 -translate-x-1/2 top-8 w-0.5 h-6 bg-gray-300"></div>
               </div>
-              <span className="pt-1">Centraliser et sécuriser les dossiers patients.</span>
+              <span className="pt-1">Centralizing and securing patient records.</span>
             </div>
 
             
             <div className="flex items-start gap-4">
               <RiNumber4 size={32} className="text-gray-700 bg-gray-200 p-1 rounded-full" />
-              <span className="pt-1">Améliorer le suivi et la communication avec les patients.</span>
+              <span className="pt-1">Improving communication and follow-up with patients.</span>
             </div>
 
           </div>

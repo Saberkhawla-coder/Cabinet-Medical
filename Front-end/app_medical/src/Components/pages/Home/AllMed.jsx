@@ -42,11 +42,12 @@ function AllMed() {
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold text-gray-900 mb-4">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">
-            Notre Équipe Médicale
+             Our Medical Team
           </span>
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          Des professionnels passionnés dédiés à offrir des soins médicaux modernes, fiables et humains. Notre équipe collabore pour garantir une expérience médicale fluide et rassurante.
+          Passionate professionals dedicated to providing modern, reliable, and compassionate medical care.
+          Our team works together to ensure a smooth and reassuring healthcare experience.
         </p>
       </div>
 
@@ -102,8 +103,8 @@ function AllMed() {
                 <div className="p-6 text-center">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{doctor.user?.name}</h3>
                   <p className="text-gray-600 mb-4">{doctor.speciality}</p>
-                  <button className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300">
-                    Prendre Rendez-vous
+                  <button className="inline-flex items-center cursor-pointer gap-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300">
+                    Book Now
                   </button>
                 </div>
                 <div className="h-1 bg-gradient-to-r from-blue-500 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />

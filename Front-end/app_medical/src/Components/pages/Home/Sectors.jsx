@@ -16,45 +16,46 @@ export default function Sectors() {
  const sectors = [
   {
     icon: <FaBrain size={35} className="text-blue-500" />,
-    title: "Santé Mentale",
-    desc: "Branche médicale dédiée au diagnostic, au traitement et à la prévention des troubles psychologiques et émotionnels.",
+    title: "Mental Health",
+    desc: "A medical field focused on diagnosing, treating, and preventing psychological and emotional disorders.",
   },
   {
     icon: <FaHeartbeat size={35} className="text-red-500" />,
-    title: "Cardiologie",
-    desc: "Spécialité qui étudie les maladies du cœur et des vaisseaux sanguins et assure leur prise en charge médicale.",
+    title: "Cardiology",
+    desc: "A specialty that studies heart and blood vessel diseases and provides medical care for cardiovascular conditions.",
   },
   {
     icon: <FaWalking size={35} className="text-green-500" />,
-    title: "Médecine Générale",
-    desc: "Discipline centrée sur la prise en charge globale du patient, assurant diagnostic, suivi et prévention des maladies.",
+    title: "General Medicine",
+    desc: "A discipline that offers global patient care, including diagnosis, follow-up, and disease prevention.",
   },
   {
     icon: <FaXRay size={35} className="text-purple-500" />,
-    title: "Radiologie",
-    desc: "Spécialité utilisant l’imagerie médicale pour observer l’intérieur du corps et établir des diagnostics précis.",
+    title: "Radiology",
+    desc: "A specialty using medical imaging to observe inside the body and support accurate diagnosis.",
   },
   {
     icon: <FaChild size={35} className="text-yellow-500" />,
-    title: "Pédiatrie",
-    desc: "Branche qui traite la santé et le développement des nourrissons, enfants et adolescents.",
+    title: "Pediatrics",
+    desc: "A branch of medicine focused on the health and development of infants, children, and teenagers.",
   },
   {
     icon: <FaTeeth size={35} className="text-gray-500" />,
-    title: "Dentisterie",
-    desc: "Science spécialisée dans le diagnostic, le traitement et la prévention des maladies bucco-dentaires.",
+    title: "Dentistry",
+    desc: "A science specialized in diagnosing, treating, and preventing oral and dental diseases.",
   },
   {
     icon: <FaEye size={35} className="text-indigo-500" />,
-    title: "Ophtalmologie",
-    desc: "Spécialité dédiée aux maladies et anomalies des yeux et du système visuel.",
+    title: "Ophthalmology",
+    desc: "A specialty dedicated to diseases and disorders of the eyes and the visual system.",
   },
   {
     icon: <FaLungs size={35} className="text-teal-500" />,
-    title: "Pneumologie",
-    desc: "Discipline médicale qui s’occupe des maladies des poumons et du système respiratoire.",
+    title: "Pulmonology",
+    desc: "A medical discipline focused on diseases of the lungs and the respiratory system.",
   }
 ];
+
 
 
   return (
@@ -62,10 +63,10 @@ export default function Sectors() {
     <div className="py-20">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-900 mb-6">
-          Nos Secteurs Médicaux
+            Our Most Popular Medical Sectors
         </h2>
         <p className="text-center text-gray-500 text-lg mb-12">
-          Découvrez nos domaines de soins adaptés pour tous vos besoins.
+          Discover our healthcare fields designed to meet all your needs.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
