@@ -50,7 +50,7 @@ function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
+        
         <div className="mt-12 border-t border-gray-200 pt-6 text-center text-gray-500 text-sm">
           &copy; {new Date().getFullYear()} Health Clinic. All rights reserved.
         </div>
