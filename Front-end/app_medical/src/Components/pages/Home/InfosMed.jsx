@@ -11,7 +11,7 @@ function InfosMed() {
        
         <div className="relative w-80 h-80 md:w-96 md:h-96 flex-shrink-0">
           <img
-            src="/images/MedImg.jpg"
+            src="/images/HomeAnimation/MedImg.jpg"
             alt="doctor"
             className="w-full h-full absolute top-25  object-cover rounded-full shadow-xl border-4 border-white"
           />
