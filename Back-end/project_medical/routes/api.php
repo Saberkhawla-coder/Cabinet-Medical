@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\patientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +30,25 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+Route::get('/doctors', [DoctorController::class, 'index']);
+Route::post('/doctors', [DoctorController::class, 'store']);
+Route::patch('/doctors/{id}', [DoctorController::class, 'update']);
+Route::delete('/doctors/{id}', [DoctorController::class, 'destroy']);
+
+Route::middleware('auth:sanctum')->get('/doctors/my', [DoctorController::class, 'my']);
+Route::post('/contact', [ContactController::class, 'send']);
+Route::get('/contacts', [ContactController::class, 'index']);
+Route::post('/contacts/read-all', [ContactController::class, 'markAllRead']);
+
+
+Route::get('/patients', [patientController::class, 'index']);
+
+
+
+Route::get('/appointments', [AppointmentController::class, 'index']);
+Route::post('/appointments', [AppointmentController::class, 'store']);
+Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy']);
+Route::put('/appointments/{id}', [AppointmentController::class, 'update']);
+
+
