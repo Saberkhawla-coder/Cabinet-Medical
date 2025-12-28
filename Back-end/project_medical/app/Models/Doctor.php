@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Doctor extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'speciality',
+        'img',
+        'start_time',
+        'end_time',
+        'slot_duration',
+        'is_active',
+        
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
