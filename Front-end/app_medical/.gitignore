@@ -7,6 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+Front-end/app_medical/public/images/
+Front-end/app_medical/public/videos/
+repo-backup.git/
 # Ignorer certaines images lourdes
 Front-end/app_medical/public/images/Healthy/*.jpg
 Front-end/app_medical/public/images/HomeAnimation/*.jpg
