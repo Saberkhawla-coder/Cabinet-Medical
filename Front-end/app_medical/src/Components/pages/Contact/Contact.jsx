@@ -1,40 +1,34 @@
-import React from 'react'
-import Sante from '/public/images/Sante.jpg'
-import { Link } from 'react-router-dom'
-import GetInTouch from './GetInTouch'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import GetInTouch from './GetInTouch';
 
 function Contact() {
   return (
     <>
-      {/* Hero */}
-      <div className="relative w-full h-[400px] overflow-hidden">
-        <img
-          src={Sante}
-          alt="Contact background"
-          className="w-full h-full object-cover"
-        />
+    
+      <div className="relative w-full h-[70vh] flex justify-center items-center">
+      <div className="absolute inset-0 bg-[url('/images/Healthy/bg.jpg')] bg-cover bg-center opacity-30"></div>
+        <div className="absolute inset-0 bg-sky-200/30 backdrop-blur-sm"></div>
 
-        <div className="absolute inset-0 bg-black/85 flex flex-col items-center justify-center text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+        <div  className="relative max-w-5xl mx-auto text-center px-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-4">
             Contact Us
           </h1>
 
-          <div className="flex items-center gap-2 text-white/80 text-sm">
-            <Link to="/" className="hover:text-[#4DA3FF] transition">
+          <div className="flex items-center justify-center gap-2 text-gray-700 text-lg max-w-2xl mx-auto md:text-base">
+            <Link to="/" className="hover:underline transition">
               Home
             </Link>
             <span>/</span>
-            <Link to="/contact" className="text-[#4DA3FF] font-medium">
-              Contact Us
-            </Link>
+            <span className="font-semibold">Contact Us</span>
           </div>
         </div>
       </div>
 
+      {/* Form Section */}
       <GetInTouch />
-
     </>
-  )
+  );
 }
 
-export default Contact
+export default Contact;
