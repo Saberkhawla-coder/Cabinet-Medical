@@ -14,7 +14,7 @@ export const fetchappointments=createAsyncThunk(
     }
 )
 const appointmentsSlice = createSlice({
-    name: "appointments",
+    name: "appointment",
     initialState: {
         loading: false,
         error: null,
