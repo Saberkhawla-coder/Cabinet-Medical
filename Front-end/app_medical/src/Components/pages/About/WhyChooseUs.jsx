@@ -1,6 +1,6 @@
 import React from 'react'
 import { CalendarCheck, Users, ShieldCheck, Clock } from 'lucide-react'
-import Footer from '../../Footer'
+import Footer from '../Footer'
 
 function WhyChooseUs() {
   const features = [
