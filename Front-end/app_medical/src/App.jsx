@@ -25,6 +25,7 @@ import BookAppointmentPage from "./Components/ConnectedPatient/BookAppointment/B
 import AppointmentsPage from "./Components/ConnectedPatient/Appointments/AppointmentsPage";
 import HealthTipsPage from "./Components/ConnectedPatient/Health/HealthTipsPage";
 import PatientsDashboardDoc from "./Components/Dashboard/Doctor/DocPatients/PatientsDashboardDoc";
+import RdvDashboardDoc from "./Components/Dashboard/Doctor/DocRdv/RdvDashboardDoc";
 function App() {
    
 
@@ -66,8 +67,10 @@ function App() {
         <Route path="/doctors"  element={<MedcineDashboard/>}/>
         <Route path="/admin/contact-history"  element={<ContactDashoard/>}/>
         <Route path="/admin/RDV"  element={<RdvDashboard/>}/>
+
         <Route path="/dashboard/doctor" element={<DoctorDashboard/>} />
         <Route path="/patients/doctor"  element={<PatientsDashboardDoc/>}/>
+        <Route path="/doctor/RDV"  element={<RdvDashboardDoc/>}/>
       </Route>
     </Routes>
     </>
