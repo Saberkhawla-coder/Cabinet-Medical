@@ -24,6 +24,7 @@ import { Toaster } from 'sonner';
 import BookAppointmentPage from "./Components/ConnectedPatient/BookAppointment/BookAppointmentPage";
 import AppointmentsPage from "./Components/ConnectedPatient/Appointments/AppointmentsPage";
 import HealthTipsPage from "./Components/ConnectedPatient/Health/HealthTipsPage";
+import PatientsDashboardDoc from "./Components/Dashboard/Doctor/DocPatients/PatientsDashboardDoc";
 function App() {
    
 
@@ -66,6 +67,7 @@ function App() {
         <Route path="/admin/contact-history"  element={<ContactDashoard/>}/>
         <Route path="/admin/RDV"  element={<RdvDashboard/>}/>
         <Route path="/dashboard/doctor" element={<DoctorDashboard/>} />
+        <Route path="/patients/doctor"  element={<PatientsDashboardDoc/>}/>
       </Route>
     </Routes>
     </>

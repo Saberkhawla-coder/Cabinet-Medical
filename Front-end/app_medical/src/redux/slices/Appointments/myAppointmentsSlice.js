@@ -18,7 +18,7 @@ export const cancelAppointment = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const res = await api.put(`/appointments/${id}`, { status: "cancelled" });
-      return res.data.data; // rendez-vous mis à jour
+      return res.data.data;
     } catch (err) {
       return rejectWithValue("Cannot cancel appointment: " + err.message);
     }

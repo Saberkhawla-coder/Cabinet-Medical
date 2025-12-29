@@ -27,7 +27,7 @@ function Sidebar() {
           className="font-bold text-lg text-transparent bg-clip-text p-4 bg-gradient-to-r from-blue-600 via-teal-300 to-teal-300"
         >
     HealthCare
-  </Link>
+      </Link>
 
 
   <nav className="flex-1 px-3 py-6 space-y-1">
@@ -101,6 +101,53 @@ function Sidebar() {
     Déconnexion
   </button>
       </>:<>
+       <Link
+          to="/"
+          className="font-bold text-lg text-transparent bg-clip-text p-4 bg-gradient-to-r from-blue-600 via-teal-300 to-teal-300"
+        >
+    HealthCare
+      </Link>
+
+
+  <nav className="flex-1 px-3 py-6 space-y-1">
+    <Link
+      to="/dashboard/doctor"
+      className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
+        location.pathname === "/dashboard/doctor"
+          ? "bg-blue-50 text-blue-600 rounded-b-full"
+          : "text-slate-700 hover:bg-blue-50"
+      }`}
+    >
+      <LayoutDashboard size={18} />
+      Tableau de bord
+    </Link>
+
+    <Link
+      to="/patients/doctor"
+      className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
+        location.pathname === "/patients"
+          ? "bg-blue-50 text-blue-600 rounded-b-full"
+          : "text-slate-700 hover:bg-blue-50"
+      }`}
+    >
+      <Users size={18} />
+      Patients
+    </Link>
+
+   
+     <Link
+      to="/admin/RDV"
+      className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
+        location.pathname === "/admin/RDV"
+          ? "bg-blue-50 text-blue-600 rounded-b-full"
+          : "text-slate-700 hover:bg-blue-50"
+      }`}
+    >
+      <CalendarHeart size={18} />
+      Rendez-vous
+    </Link>
+
+  </nav>
        <button
     onClick={handleLogout}
     className="flex items-center gap-3 px-6 py-4 text-sm text-slate-500  cursor-pointer border-t border-slate-200 transition"

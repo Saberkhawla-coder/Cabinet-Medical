@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Doctor;
-use App\Models\Patient;
 use App\Models\User;
 
 class UserObserver
@@ -14,29 +13,25 @@ class UserObserver
     public function created(User $user): void
     {
         //
-        if($user->role==='doctor'){
-            Doctor::create([
-                "user_id"=>$user->id,
-                'speciality' => 'General',
-                'start_time' => '08:00',
-                'end_time' => '17:00',
-                'slot_duration' => 30,
-            ]);
-        }
-        if($user->role==='patient'){
-            Patient::create([
-                "user_id"=>$user->id,
-                'phone'=>'0606065544',
-            ]);
-        }
     }
 
     /**
      * Handle the User "updated" event.
      */
-    public function updated(User $user): void
+    public function updated(User $user)
     {
-        //
+        if($user->isDirty('role') && $user->role === 'doctor'){  
+            Doctor::firstOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'speciality' => 'Dermato',
+                    'start_time' => '09:00',
+                    'end_time' => '17:00',
+                    'slot_duration' => 30,
+                    'is_active' => true,
+                ]
+            );
+        }
     }
 
     /**
