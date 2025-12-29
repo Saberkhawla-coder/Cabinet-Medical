@@ -3,41 +3,74 @@ import { Link } from "react-router-dom";
 import { CloudUpload, Send } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllDoctors } from "../../../redux/slices/Doctors/allDoctors";
-
+import { fetchMessages ,sendMessage} from "../../../redux/slices/Chat/chatSlice";
 export default function ChatPage() {
-  const { doctors } = useSelector((state) => state.doctors);
   const dispatch = useDispatch();
+  const { doctors } = useSelector((state) => state.doctors);
+  const currentUserId = useSelector((state) => state.auth.user.id);
+  const { messagesByDoctor, loading } = useSelector((state) => state.messages);
+
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [messages, setMessages] = useState([
-    { sender: "doctor", type: "text", message: "Hello, how can I help you?" },
-  ]);
   const [newMessage, setNewMessage] = useState("");
   const chatRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchAllDoctors());
-    chatRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [dispatch, messages]);
+  }, [dispatch]);
 
-  const sendText = () => {
-    if (!newMessage.trim()) return;
-    setMessages([...messages, { sender: "patient", type: "text", message: newMessage }]);
+  useEffect(() => {
+    if (selectedDoctor) {
+      dispatch(fetchMessages(selectedDoctor.id));
+    }
+  }, [dispatch, selectedDoctor]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      chatRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messagesByDoctor, selectedDoctor]);
+
+  const handleSendText = async () => {
+    if (!newMessage.trim() || !selectedDoctor) return;
+
+    await dispatch(
+      sendMessage({
+        receiver_id: selectedDoctor.id,
+        type: "text",
+        message: newMessage,
+      })
+    ).unwrap();
+
     setNewMessage("");
+    dispatch(fetchMessages(selectedDoctor.id));
   };
 
-  const handleUpload = (e) => {
+  const handleUpload = async (e) => {
+    if (!selectedDoctor) return;
     const file = e.target.files[0];
     if (!file) return;
 
-    const url = URL.createObjectURL(file);
-    const fileType = file.type.startsWith("image") ? "image" : "file";
-    setMessages([...messages, { sender: "patient", type: fileType, file, url }]);
+    const formData = new FormData();
+    formData.append("receiver_id", selectedDoctor.id);
+    formData.append("type", file.type.startsWith("image") ? "image" : "file");
+    formData.append("file", file);
+
+    await dispatch(sendMessage(formData)).unwrap();
   };
 
+  const doctorId = selectedDoctor?.id;
+  const filteredMessages =
+    selectedDoctor && Array.isArray(messagesByDoctor[doctorId])
+      ? messagesByDoctor[doctorId]
+      : [];
+
   return (
-    <div className="min-h-screen ">
-      <header className="text-center ">
-        <Link to="/" className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">
+    <div className="min-h-screen">
+      <header className="text-center">
+        <Link
+          to="/"
+          className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500"
+        >
           HealthCare
         </Link>
       </header>
@@ -51,8 +84,11 @@ export default function ChatPage() {
               <li
                 key={doc?.id}
                 onClick={() => setSelectedDoctor(doc)}
-                className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-all hover:bg-blue-100
-                ${selectedDoctor?.id === doc?.id ? "bg-blue-200 font-semibold shadow" : ""}`}
+                className={`p-3 rounded-xl cursor-pointer flex items-center gap-3 transition-all hover:bg-blue-100 ${
+                  selectedDoctor?.id === doc?.id
+                    ? "bg-blue-200 font-semibold shadow"
+                    : ""
+                }`}
               >
                 <img
                   src={`http://127.0.0.1:8000/storage/${doc?.img}`}
@@ -68,41 +104,63 @@ export default function ChatPage() {
           </ul>
         </aside>
 
-        {/* Chat Area */}
+        {/* Chat area */}
         <main className="flex-1 flex flex-col bg-gray-50">
-          {/* Chat Header */}
           <header className="flex items-center justify-between p-4 border-b border-gray-200 bg-white shadow-sm">
             <div>
-              <h3 className="text-xl font-bold">{selectedDoctor?.user?.name || "Select a doctor"}</h3>
+              <h3 className="text-xl font-bold">
+                {selectedDoctor?.name || "Select a doctor"}
+              </h3>
               <p className="text-sm text-gray-500">{selectedDoctor?.specialty}</p>
             </div>
           </header>
 
-          {/* Messages */}
           <div className="flex-1 p-4 overflow-y-auto space-y-4">
-            {messages.map((msg, i) => (
+            {loading && <p className="text-gray-400 text-center mt-4">Loading messages...</p>}
+            {!loading && filteredMessages.length === 0 && selectedDoctor && (
+              <p className="text-gray-400 text-center mt-4">No messages yet</p>
+            )}
+
+            {filteredMessages.map((msg, i) => (
               <div
                 key={i}
-                className={`flex ${msg.sender === "patient" ? "justify-end" : "justify-start"}`}
+                className={`flex ${
+                  msg.sender_id === currentUserId ? "justify-end" : "justify-start"
+                }`}
               >
                 <div
-                  className={`p-3 rounded-2xl max-w-xs shadow-md break-words
-                  ${msg.sender === "patient" ? "bg-blue-600 text-white" : "bg-white text-gray-800 border border-gray-200"}`}
+                  className={`p-3 rounded-2xl max-w-xs shadow-md break-words ${
+                    msg.sender_id === currentUserId
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-gray-800 border border-gray-200"
+                  }`}
                 >
                   {msg.type === "text" && <p>{msg.message}</p>}
-                  {msg.type === "image" && <img src={msg.url} alt="upload" className="rounded-md max-h-60 mt-1" />}
-                  {msg.type === "file" && (
-                    <a href={msg.url} download className="underline text-sm block mt-1">
+
+                  {msg.type === "image" && msg.message && (
+                    <img
+                      src={msg.message.startsWith("http") ? msg.message : `http://127.0.0.1:8000${msg.message}`}
+                      alt="upload"
+                      className="rounded-md max-h-60 mt-1"
+                    />
+                  )}
+
+                  {msg.type === "file" && msg.message && (
+                    <a
+                      href={msg.message.startsWith("http") ? msg.message : `http://127.0.0.1:8000${msg.message}`}
+                      download
+                      className="underline text-sm block mt-1"
+                    >
                       Download file
                     </a>
                   )}
                 </div>
               </div>
             ))}
+
             <div ref={chatRef} />
           </div>
 
-          {/* Input */}
           <div className="p-4 border-t border-gray-200 flex items-center gap-3 bg-white sticky bottom-0 shadow-inner">
             <input
               type="file"
@@ -121,13 +179,13 @@ export default function ChatPage() {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendText()}
+              onKeyDown={(e) => e.key === "Enter" && handleSendText()}
               placeholder="Type a message..."
               className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:ring-2 focus:ring-blue-300 outline-none"
             />
 
             <button
-              onClick={sendText}
+              onClick={handleSendText}
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full transition-all"
             >
               <Send className="w-5 h-5" /> Send
