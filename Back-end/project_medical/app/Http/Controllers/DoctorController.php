@@ -66,7 +66,7 @@ class DoctorController extends Controller
         'is_active' => 'sometimes|boolean',
     ]);
 
-    // Upload image si présent
+    
     if ($request->hasFile('img')) {
         $file = $request->file('img');
         $filename = time().'_'.$file->getClientOriginalName();
@@ -93,4 +93,28 @@ class DoctorController extends Controller
             'message' => 'Doctor supprimé avec succès'
         ]);
     }
+    public function myPatients() {
+    $doctor = Doctor::where('user_id', Auth::id())->first();
+
+    if(!$doctor) return response()->json(['error' => 'No doctor found'], 404);
+
+    $patients = $doctor->appointments()
+        ->with('patient.user')
+        ->get()
+        ->pluck('patient')
+        ->unique('id')
+        ->values();
+
+    return response()->json($patients);
+}
+
+public function myAppointments() {
+    $doctor = Doctor::where('user_id', Auth::id())->first();
+
+    if(!$doctor) return response()->json(['error'=>'No doctor found'],404);
+
+    return response()->json(
+        $doctor->appointments()->with('patient.user')->get()
+    );
+}
 }
