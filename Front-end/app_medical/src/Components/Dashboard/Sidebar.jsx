@@ -136,7 +136,7 @@ function Sidebar() {
 
    
      <Link
-      to="/admin/RDV"
+      to="/doctor/RDV"
       className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
         location.pathname === "/admin/RDV"
           ? "bg-blue-50 text-blue-600 rounded-b-full"
