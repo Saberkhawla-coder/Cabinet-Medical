@@ -4,10 +4,13 @@ import registerReducer from "./slices/Auth/registerSlice";
 import AllMedReducer from "./slices/Doctors/allDoctors";
 import contactReducer from "./slices/Contact/allContact"
 import PatientReducer from "./slices/Patients/patientsSlice";
-import DoctorConnectedReducer from './slices/Doctors/DoctorSpe'
 import appointmentsReducer from './slices/Appointments/appointmentsSlice'
 import myAppointmentsReducer from './slices/Appointments/myAppointmentsSlice'
 import appointmentReducer from './slices/Appointments/appointmentSlice'
+import messagesReducer from './slices/Chat/chatSlice'
+import myDoctorSReducer from './slices/Doctors/myDoctorSlice'
+import myPatientsReducer from "./slices/Doctors/myPatientsSlice";
+import myAppointmentsDocReducer from "./slices/Doctors/myAppointmentsSlice";
 export const store=configureStore({
     reducer:{
         auth:authReducer,
@@ -15,10 +18,13 @@ export const store=configureStore({
         doctors:AllMedReducer,
         contacts:contactReducer,
         patients:PatientReducer,
-        doctor:DoctorConnectedReducer,
         appointments:appointmentsReducer,
         myAppointments:myAppointmentsReducer,
         appointment:appointmentReducer,
+        messages:messagesReducer, 
+        myDoctor:myDoctorSReducer,
+        myPatients: myPatientsReducer,
+        myAppointmentsDoc: myAppointmentsDocReducer,
     }
 })
 
