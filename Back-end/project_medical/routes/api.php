@@ -45,6 +45,11 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/chat/messages/{id}', [MessageController::class,'getMessages']);
+    Route::post('/chat/send', [MessageController::class,'sendMessage']);
+});
+
 Route::post('/contact', [ContactController::class, 'send']);
 Route::get('/contacts', [ContactController::class, 'index']);
 Route::post('/contacts/read-all', [ContactController::class, 'markAllRead']);
@@ -61,8 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/messages/{doctorId}', [MessageController::class, 'getMessages']);
-    Route::post('/messages', [MessageController::class, 'sendMessage']);
-});
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::get('/messages/{doctorId}', [MessageController::class, 'getMessages']);
+//     Route::post('/messages', [MessageController::class, 'sendMessage']);
+// });
 

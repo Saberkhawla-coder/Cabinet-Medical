@@ -30,14 +30,14 @@ function Rdv() {
      
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestion des RDV</h1>
-          <p className="text-gray-600 mt-2">Consultez et gérez l'ensemble des rendez-vous de votre cabinet</p>
+          <h1 className="text-3xl font-bold text-gray-900">Appointment management</h1>
+          <p className="text-gray-600 mt-2">View and manage all your practice's appointments</p>
         </div>
          <button
           onClick={() => setOpenModal(true)}
           className="mt-4 md:mt-0 flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl shadow"
         >
-          <Plus className="w-5 h-5 mr-2" /> Nouveau RDV
+          <Plus className="w-5 h-5 mr-2" /> New appointment
         </button>
         <AddRdvModal 
         open={openModal} 
@@ -54,7 +54,7 @@ function Rdv() {
           </div>
 
           <div className="ml-4">
-            <p className="text-gray-500 text-sm">Total RDV</p>
+            <p className="text-gray-500 text-sm">Total appointment</p>
             <p className="text-2xl font-bold text-gray-900">{appointments.length}</p>
           </div>
         </div>
@@ -66,7 +66,7 @@ function Rdv() {
           </div>
 
           <div className="ml-4">
-            <p className="text-gray-500 text-sm">RDV Confirmés</p>
+            <p className="text-gray-500 text-sm">Confirmed</p>
             <p className="text-2xl font-bold text-gray-900">{appointments.filter(a => a.status === "confirmed").length}</p>
           </div>
         </div>
@@ -78,7 +78,7 @@ function Rdv() {
           </div>
 
           <div className="ml-4">
-            <p className="text-gray-500 text-sm">RDV en attente</p>
+            <p className="text-gray-500 text-sm">Pending</p>
             <p className="text-2xl font-bold text-gray-900">{appointments.filter(c=>c.status==='pending').length}</p>
           </div>
         </div>
@@ -90,7 +90,7 @@ function Rdv() {
           </div>
 
           <div className="ml-4">
-            <p className="text-gray-500 text-sm">RDV cette semaine</p>
+            <p className="text-gray-500 text-sm">Appointment thisWeek</p>
             <p className="text-2xl font-bold text-gray-900">{appointmentsThisWeek.length}</p>
           </div>
         </div>

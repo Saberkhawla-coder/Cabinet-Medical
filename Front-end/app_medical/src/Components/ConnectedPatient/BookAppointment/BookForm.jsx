@@ -7,7 +7,7 @@ import { createAppointment, reset } from "../../../redux/slices/Appointments/app
 function BookForm() {
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.appointment);
-  const { user } = useSelector((state) => state.auth); 
+//   const { user } = useSelector((state) => state.auth); 
   const { doctors } = useSelector((state) => state.doctors);
 
   const [form, setForm] = useState({
@@ -22,7 +22,7 @@ function BookForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createAppointment(form)); // no need for patient_id, backend handles it
+    dispatch(createAppointment(form)); 
   };
 
   useEffect(() => {

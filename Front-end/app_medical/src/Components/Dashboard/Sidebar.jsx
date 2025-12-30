@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { LogOut, LayoutDashboard, Users, Stethoscope,MessageCircle,CalendarHeart } from "lucide-react";
+import { LogOut, LayoutDashboard,Users, Stethoscope,MessageCircle,CalendarHeart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/slices/Auth/authSlice";
 
@@ -27,7 +27,7 @@ function Sidebar() {
           className="font-bold text-lg text-transparent bg-clip-text p-4 bg-gradient-to-r from-blue-600 via-teal-300 to-teal-300"
         >
     HealthCare
-      </Link>
+      </Link> 
 
 
   <nav className="flex-1 px-3 py-6 space-y-1">
@@ -40,7 +40,7 @@ function Sidebar() {
       }`}
     >
       <LayoutDashboard size={18} />
-      Tableau de bord
+      Dashboard
     </Link>
 
     <Link
@@ -64,7 +64,7 @@ function Sidebar() {
       }`}
     >
       <Stethoscope size={18} />
-      Médecins
+      Doctors
     </Link>
      <Link
       to="/admin/contact-history"
@@ -76,7 +76,7 @@ function Sidebar() {
     >
 
     <MessageCircle size={18} />
-      Historique des Contacts
+      Contact History
     </Link>
      <Link
       to="/admin/RDV"
@@ -87,7 +87,7 @@ function Sidebar() {
       }`}
     >
       <CalendarHeart size={18} />
-      Rendez-vous
+      Appointment
     </Link>
 
   </nav>
@@ -98,7 +98,7 @@ function Sidebar() {
     className="flex items-center gap-3 px-6 py-4 text-sm text-slate-500  cursor-pointer border-t border-slate-200 transition"
   >
     <LogOut size={18} />
-    Déconnexion
+    Logout
   </button>
       </>:<>
        <Link
@@ -119,13 +119,13 @@ function Sidebar() {
       }`}
     >
       <LayoutDashboard size={18} />
-      Tableau de bord
+      Dashboard
     </Link>
 
     <Link
       to="/patients/doctor"
       className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
-        location.pathname === "/patients"
+        location.pathname === "/patients/doctor"
           ? "bg-blue-50 text-blue-600 rounded-b-full"
           : "text-slate-700 hover:bg-blue-50"
       }`}
@@ -138,13 +138,24 @@ function Sidebar() {
      <Link
       to="/doctor/RDV"
       className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
-        location.pathname === "/admin/RDV"
+        location.pathname === "/doctor/RDV"
           ? "bg-blue-50 text-blue-600 rounded-b-full"
           : "text-slate-700 hover:bg-blue-50"
       }`}
     >
       <CalendarHeart size={18} />
-      Rendez-vous
+      Appointment
+    </Link>
+    <Link
+      to="/doctor/chat"
+      className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
+        location.pathname === "/doctor/chat"
+          ? "bg-blue-50 text-blue-600 rounded-b-full"
+          : "text-slate-700 hover:bg-blue-50"
+      }`}
+    >
+      <MessageCircle size={18} />
+      Chat
     </Link>
 
   </nav>
@@ -153,7 +164,7 @@ function Sidebar() {
     className="flex items-center gap-3 px-6 py-4 text-sm text-slate-500  cursor-pointer border-t border-slate-200 transition"
   >
     <LogOut size={18} />
-    Déconnexion
+    Logout
   </button> </>}
   
 </aside>

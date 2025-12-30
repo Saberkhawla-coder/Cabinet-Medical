@@ -31,7 +31,7 @@ function GraphiquePatientsDoc() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4">
       
       <div className="lg:col-span-2 rounded-2xl shadow-xl border border-gray-200 p-6 h-[400px] flex flex-col">
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">Rendez-vous par mois</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">Appointments per month</h3>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
@@ -44,7 +44,7 @@ function GraphiquePatientsDoc() {
       </div>
 
       <div className="rounded-2xl shadow-xl border border-gray-200 p-6 h-[400px] flex flex-col">
-        <h3 className="text-2xl font-bold text-gray-900 mb-6">Calendrier</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">Calendar</h3>
         <div className="flex-1">
           <Calendar
             className="custom-calendar rounded-xl border border-gray-200 shadow-sm w-full h-full"
