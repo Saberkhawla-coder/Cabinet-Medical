@@ -12,6 +12,7 @@ import myDoctorSReducer from './slices/Doctors/myDoctorSlice'
 import myPatientsReducer from "./slices/Doctors/myPatientsSlice";
 import myAppointmentsDocReducer from "./slices/Doctors/myAppointmentsSlice";
 import updateStatusDocReducer from './slices/Doctors/updateAppointmentStatus'
+import doctorPatientsReducer from "./slices/Doctors/doctorPatients"
 export const store=configureStore({
     reducer:{
         auth:authReducer,
@@ -27,6 +28,7 @@ export const store=configureStore({
         myPatients: myPatientsReducer,
         myAppointmentsDoc: myAppointmentsDocReducer,
         updateStatusDoc:updateStatusDocReducer,
+        doctorPatients:doctorPatientsReducer
     }
 })
 

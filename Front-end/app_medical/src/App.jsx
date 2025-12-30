@@ -26,6 +26,7 @@ import AppointmentsPage from "./Components/ConnectedPatient/Appointments/Appoint
 import HealthTipsPage from "./Components/ConnectedPatient/Health/HealthTipsPage";
 import PatientsDashboardDoc from "./Components/Dashboard/Doctor/DocPatients/PatientsDashboardDoc";
 import RdvDashboardDoc from "./Components/Dashboard/Doctor/DocRdv/RdvDashboardDoc";
+import ChatDoc from "./Components/Dashboard/Doctor/ChatDoc/ChatDoc";
 function App() {
    
 
@@ -71,6 +72,7 @@ function App() {
         <Route path="/dashboard/doctor" element={<DoctorDashboard/>} />
         <Route path="/patients/doctor"  element={<PatientsDashboardDoc/>}/>
         <Route path="/doctor/RDV"  element={<RdvDashboardDoc/>}/>
+        <Route path="/doctor/chat"  element={<ChatDoc/>}/>
       </Route>
     </Routes>
     </>

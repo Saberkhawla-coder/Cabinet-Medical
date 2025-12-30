@@ -53,10 +53,10 @@ function Navbar() {
         <User className="hover:text-green-800/50 cursor-pointer" />
       </Link>
     ) : (
-      <div className='flex justify-center items-center gap-2 '>
-         <Link to="/chat"><MessageCircle size={20}/></Link>
+      <div className='flex justify-center items-center gap-3 '>
+         <Link to="/chat"><MessageCircle size={25}/></Link>
       <button onClick={handleLogout}>
-        <LogOut size={20} />
+        <LogOut size={25}  className='cursor-pointer'/>
       </button>
       </div>
      
@@ -81,11 +81,11 @@ function Navbar() {
 
     {!isAuthenticated ? (
       <Link to="/login" aria-label="Login" title="Login">
-        <User className="hover:text-sky-500" />
+        <User size={25} className="hover:text-sky-500" />
       </Link>
     ) : (
       <button onClick={handleLogout}>
-        <LogOut size={20} />
+        <LogOut size={25} className='cursor-pointer'/>
       </button>
     )}
   </nav>

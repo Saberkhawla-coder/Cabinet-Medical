@@ -20,7 +20,7 @@ function Search() {
   return (
     <div className="flex justify-between items-center p-4  shadow-md rounded-xl">
       <div className="font-semibold text-gray-800 text-lg">
-        BIENVENUE, {user?.name.toUpperCase()}
+        WELCOME, {user?.name.toUpperCase()}
       </div>
 
       <div

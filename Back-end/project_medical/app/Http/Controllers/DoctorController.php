@@ -93,10 +93,13 @@ class DoctorController extends Controller
             'message' => 'Doctor supprimé avec succès'
         ]);
     }
-    public function myPatients() {
+    public function myPatients()
+{
     $doctor = Doctor::where('user_id', Auth::id())->first();
 
-    if(!$doctor) return response()->json(['error' => 'No doctor found'], 404);
+    if (!$doctor) {
+        return response()->json(['error' => 'No doctor found'], 404);
+    }
 
     $patients = $doctor->appointments()
         ->with('patient.user')
@@ -107,6 +110,7 @@ class DoctorController extends Controller
 
     return response()->json($patients);
 }
+
 
 public function myAppointments() {
     $doctor = Doctor::where('user_id', Auth::id())->first();

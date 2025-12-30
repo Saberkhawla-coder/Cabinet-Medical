@@ -19,11 +19,11 @@ function ContactFormMap() {
     e.preventDefault();
     try {
       await api.post('/contact', formData); 
-       toast.success("Message envoyé avec succès !");
+      toast.success("Message sent successfully!");
       setFormData({name:'', email:'', phone:'', message:''});
     } catch (error) {
       console.error(error);
-      toast.error("Erreur lors de l'envoi du message");
+      toast.error("Error sending the message");
     }
   }
 
@@ -35,7 +35,7 @@ function ContactFormMap() {
             
             <div className="bg-white rounded-2xl p-8 shadow-xl">
               <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                Envoyez-nous un message
+                Send us a message
               </h2>
 
               <form className="space-y-5" onSubmit={handleSubmit}>
@@ -44,7 +44,7 @@ function ContactFormMap() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Nom complet"
+                  placeholder="Full Name"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -54,7 +54,7 @@ function ContactFormMap() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Adresse email"
+                  placeholder="Email Address"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -64,7 +64,7 @@ function ContactFormMap() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="Téléphone"
+                  placeholder="Phone"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
@@ -73,7 +73,7 @@ function ContactFormMap() {
                   rows="5"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Votre message"
+                  placeholder="Your message"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -82,7 +82,7 @@ function ContactFormMap() {
                   type="submit"
                   className="w-full bg-gradient-to-r from-blue-600 to-teal-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition"
                 >
-                  Envoyer le message
+                  Send Message
                 </button>
               </form>
             </div>

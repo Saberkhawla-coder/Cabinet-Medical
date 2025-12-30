@@ -22,24 +22,16 @@ function GraphiquePatients() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-gray-50 ">
         
-      {/* Graphique */}
+     
       <div className="lg:col-span-2  rounded-2xl shadow-xl border border-gray-200 p-6 h-[400px] flex flex-col transition-all duration-300 hover:shadow-2xl hover:border-blue-100">
         <div className="mb-6 flex justify-between items-center">
-          <div>
+        
             <h3 className="text-2xl font-bold text-gray-900">
-              Rendez-vous par mois
+              Appointments per month
             </h3>
-            <p className="text-sm text-gray-500 mt-1">
-              Statistiques mensuelles des rendez-vous
-            </p>
           </div>
-          <div className="flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 rounded-full">
-            <TrendingUp className="w-5 h-5 text-blue-600 mr-2" />
-            <span className="text-sm font-semibold text-blue-700">
-              +12% ce mois-ci
-            </span>
-          </div>
-        </div>
+          
+       
 
         <div className="flex-1">
           <ResponsiveContainer width="100%" height="100%">
@@ -116,7 +108,7 @@ function GraphiquePatients() {
       <div className=" rounded-2xl shadow-xl border border-gray-200 p-6 h-[400px] flex flex-col transition-all duration-300 hover:shadow-2xl hover:border-blue-100">
         <div className="mb-6">
           <h3 className="text-2xl font-bold text-gray-900">
-            Calendrier
+            Calendar
           </h3>
           
         </div>

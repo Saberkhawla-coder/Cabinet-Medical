@@ -6,65 +6,65 @@ function WhyChooseUs() {
   const features = [
     {
       icon: <CalendarCheck size={32} className="text-blue-600" />,
-      title: "Gestion simple des rendez-vous",
-      desc: "Planifiez, modifiez et suivez les rendez-vous médicaux en quelques clics, sans complications."
+      title: "Easy Appointment Management",
+      desc: "Schedule, edit, and track medical appointments in just a few clicks, without any hassle."
     },
     {
       icon: <Users size={32} className="text-blue-600" />,
-      title: "Expérience patient améliorée",
-      desc: "Offrez à vos patients une prise de rendez-vous rapide et une communication fluide."
+      title: "Enhanced Patient Experience",
+      desc: "Provide your patients with quick appointment booking and smooth communication."
     },
     {
       icon: <ShieldCheck size={32} className="text-blue-600" />,
-      title: "Données sécurisées",
-      desc: "Les informations médicales sont protégées avec des standards de sécurité élevés."
+      title: "Secure Data",
+      desc: "Medical information is protected with high security standards."
     },
     {
       icon: <Clock size={32} className="text-blue-600" />,
-      title: "Gain de temps",
-      desc: "Automatisez les tâches administratives et concentrez-vous sur l’essentiel : vos patients."
+      title: "Time-Saving",
+      desc: "Automate administrative tasks and focus on what matters most: your patients."
     }
   ]
 
   return (
-    <><section className="py-20 bg-white">
-      <div className="container mx-auto px-6 md:px-12">
-        
-        {/* Titre */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Pourquoi nous choisir ?
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Une solution moderne pensée pour les professionnels de santé et leurs patients.
-          </p>
-        </div>
+    <>
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 md:px-12">
+          
+          {/* Title */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              Why Choose Us?
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              A modern solution designed for healthcare professionals and their patients.
+            </p>
+          </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((item, index) => (
-            <div
-              key={index}
-              className="bg-gray-50 rounded-xl p-6 shadow hover:shadow-lg transition"
-            >
-              <div className="mb-4">
-                {item.icon}
+          {/* Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((item, index) => (
+              <div
+                key={index}
+                className="bg-gray-50 rounded-xl p-6 shadow hover:shadow-lg transition"
+              >
+                <div className="mb-4">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {item.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-      </div>
-    </section>
-    <Footer/>
+        </div>
+      </section>
+      <Footer/>
     </>
-    
   )
 }
 

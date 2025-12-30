@@ -15,7 +15,7 @@ function GetInTouch() {
               <Phone className="text-white" size={28} />
             </div>
             <h3 className="text-xl text-gray-700 font-semibold mb-2">
-              Téléphone
+              Phone
             </h3>
             <p className="text-gray-600">
               +212 6 12 34 56 78
@@ -41,7 +41,7 @@ function GetInTouch() {
               <MapPin className="text-white" size={28} />
             </div>
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
-              Localisation
+              Location
             </h3>
             <p className="text-gray-600">
               Casablanca, Maroc
