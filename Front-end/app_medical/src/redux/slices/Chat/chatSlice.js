@@ -37,6 +37,19 @@ export const sendMessage = createAsyncThunk(
     }
   }
 );
+// Marquer les messages d'un utilisateur comme lus
+export const markMessagesAsRead = createAsyncThunk(
+  "messages/markAsRead",
+  async (otherUserId, { rejectWithValue }) => {
+    try {
+      await api.post(`/chat/mark-read/${otherUserId}`); // <-- route backend
+      return otherUserId;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 
 const messagesSlice = createSlice({
   name: "messages",
@@ -67,8 +80,17 @@ const messagesSlice = createSlice({
             state.messagesByUser[chatId].push(msg);
 
             console.log("Message ajouté dans le chat correct :", chatId, msg);
-            });
+            })
+            .addCase(markMessagesAsRead.fulfilled, (state, action) => {
+            const userId = action.payload;
 
+            if (state.messagesByUser[userId]) {
+                state.messagesByUser[userId] = state.messagesByUser[userId].map(msg => ({
+                ...msg,
+                is_read: 1, 
+                }));
+            }
+            })
   },
 });
 
