@@ -90,10 +90,10 @@ function AllMed() {
                     src={`http://127.0.0.1:8000/storage/${doctor.img}`}
                     alt={doctor.user}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    // onError={(e) => {
-                    //   e.target.onerror = null;
-                    //   e.target.src = "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&crop=face";
-                    // }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&crop=face";
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-md">
