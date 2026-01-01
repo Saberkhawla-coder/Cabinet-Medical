@@ -5,7 +5,8 @@ import { logoutUser } from "../../redux/slices/Auth/authSlice";
 import { useSelector, useDispatch} from 'react-redux';
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-
+    const { messagesByUser } = useSelector((state) => state.messages);
+    const currentUser = useSelector((state) => state.auth.user);
     const {isAuthenticated ,user} = useSelector((state) => state.auth);
     const isPatient = user?.role === "patient";
 
@@ -26,7 +27,10 @@ function Navbar() {
   await dispatch(logoutUser());
   navigate("/login");
 };
-  
+  const unreadCount = Object.values(messagesByUser || {})
+    .flat()
+    .filter(msg => msg.receiver_id === currentUser?.id && msg.is_read === 0)
+    .length;
 
 
   return isPatient ? (
@@ -53,10 +57,16 @@ function Navbar() {
         <User className="hover:text-green-800/50 cursor-pointer" />
       </Link>
     ) : (
-      <div className='flex justify-center items-center gap-3 '>
-         <Link to="/chat"><MessageCircle size={25}/></Link>
+      <div className='flex justify-center items-center gap-2 '>
+         <Link to="/chat" className="relative"><MessageCircle size={20}/>
+         {unreadCount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+            {unreadCount}
+          </span>
+        )}
+         </Link>
       <button onClick={handleLogout}>
-        <LogOut size={25}  className='cursor-pointer'/>
+        <LogOut size={20} />
       </button>
       </div>
      
@@ -81,11 +91,11 @@ function Navbar() {
 
     {!isAuthenticated ? (
       <Link to="/login" aria-label="Login" title="Login">
-        <User size={25} className="hover:text-sky-500" />
+        <User className="hover:text-sky-500" />
       </Link>
     ) : (
       <button onClick={handleLogout}>
-        <LogOut size={25} className='cursor-pointer'/>
+        <LogOut size={20} />
       </button>
     )}
   </nav>
