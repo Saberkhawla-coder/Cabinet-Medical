@@ -10,14 +10,12 @@ function Sidebar() {
   const dispatch=useDispatch();
   const {user}=useSelector((state)=>state.auth)
   const isAdmin = user?.role === "admin";
-  
-  
+  const { messagesByUser } = useSelector((state) => state.messages);
+  const currentUser = useSelector((state) => state.auth.user);
  const handleLogout = async () => {
   await dispatch(logoutUser());
   navigate("/login");
 };
-
-
 
   return (
     <aside className="w-64 min-h-screen bg-[#DBF5F3] border-r border-slate-200 flex flex-col">
@@ -146,17 +144,29 @@ function Sidebar() {
       <CalendarHeart size={18} />
       Appointment
     </Link>
-    <Link
-      to="/doctor/chat"
-      className={`flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
-        location.pathname === "/doctor/chat"
-          ? "bg-blue-50 text-blue-600 rounded-b-full"
-          : "text-slate-700 hover:bg-blue-50"
-      }`}
-    >
-      <MessageCircle size={18} />
-      Chat
-    </Link>
+   <Link
+  to="/doctor/chat"
+  className={`relative flex items-center gap-3 w-full px-4 py-3 text-sm font-medium transition ${
+    location.pathname === "/doctor/chat"
+      ? "bg-blue-50 text-blue-600 rounded-b-full"
+      : "text-slate-700 hover:bg-blue-50"
+  }`}
+>
+  <MessageCircle size={18} />
+  Chat
+  {Object.values(messagesByUser || {})
+    .flat()
+    .filter(msg => msg.receiver_id === currentUser.id && msg.is_read === 0)
+    .length > 0 && (
+      <span className="absolute right-5 bg-[#DBF5F3] text-blue-600 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+        {Object.values(messagesByUser || {})
+          .flat()
+          .filter(msg => msg.receiver_id === currentUser.id && msg.is_read === 0)
+          .length}
+      </span>
+  )}
+</Link>
+
 
   </nav>
        <button

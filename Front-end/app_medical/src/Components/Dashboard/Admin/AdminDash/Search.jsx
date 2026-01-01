@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell } from 'lucide-react';
+import { Bell,MessageCircle } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { readAllNotifications } from '../../../../redux/slices/Contact/allContact';
@@ -9,6 +9,8 @@ function Search() {
   const { contacts } = useSelector((state) => state.contacts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { messagesByUser } = useSelector((state) => state.messages);
+  const currentUser = useSelector((state) => state.auth.user);
 
   const unreadCount = contacts.filter(c => !c.read).length;
 
@@ -22,11 +24,13 @@ function Search() {
       <div className="font-semibold text-gray-800 text-lg">
         WELCOME, {user?.name.toUpperCase()}
       </div>
-
-      <div
+      {
+        user.role==='admin'?(
+        <div
         className="relative cursor-pointer group transition-transform hover:scale-110"
         onClick={handleBellClick}
       >
+        
         <Bell className="transition-colors duration-200 text-blue-500" hover:size={28} />
 
         {unreadCount > 0 && (
@@ -36,7 +40,25 @@ function Search() {
             {unreadCount}
           </span>
         )}
-      </div>
+      </div>):(   
+        <>  
+        <MessageCircle size={18} />
+          
+          {Object.values(messagesByUser || {})
+            .flat()
+            .filter(msg => msg.receiver_id === currentUser.id && msg.is_read === 0)
+            .length > 0 && (
+              <span className="absolute right-5 bg-[#DBF5F3] text-blue-600 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {Object.values(messagesByUser || {})
+                  .flat()
+                  .filter(msg => msg.receiver_id === currentUser.id && msg.is_read === 0)
+                  .length}
+              </span>
+          )}
+        </>
+      )
+      }
+      
     </div>
   );
 }
