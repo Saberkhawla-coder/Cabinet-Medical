@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/chat/messages/{id}', [MessageController::class,'getMessages']);
     Route::post('/chat/send', [MessageController::class,'sendMessage']);
+    Route::post('/chat/mark-read/{userId}', [MessageController::class, 'markAsRead']);
+
 });
 
 Route::post('/contact', [ContactController::class, 'send']);
