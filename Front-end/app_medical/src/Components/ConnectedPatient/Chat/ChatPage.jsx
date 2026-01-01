@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchMyAppointments } from "../../../redux/slices/Appointments/myAppointmentsSlice";
 import { fetchMessages, sendMessage } from "../../../redux/slices/Chat/chatSlice";
 import { FaUserDoctor } from "react-icons/fa6";
+import {markMessagesAsRead} from '../../../redux/slices/Chat/chatSlice'
 import {Link} from 'react-router-dom'
 export default function ChatPage() {
   const dispatch = useDispatch();
@@ -15,24 +16,21 @@ export default function ChatPage() {
   const [newMessage, setNewMessage] = useState("");
   const chatRef = useRef(null);
 
-  // Charger les rendez-vous pour obtenir la liste des docteurs
   useEffect(() => {
     dispatch(fetchMyAppointments());
   }, [dispatch]);
 
-  // Charger les messages pour le docteur sélectionné
   useEffect(() => {
     if (selectedDoctor) {
       dispatch(fetchMessages(selectedDoctor?.user?.id));
     }
   }, [dispatch, selectedDoctor]);
 
-  // Scroll automatique vers le bas
   useEffect(() => {
     setTimeout(() => chatRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
   }, [messagesByUser, selectedDoctor]);
 
-  // Envoyer un message texte
+
   const handleSendText = async () => {
   if (!newMessage.trim() || !selectedDoctor) return;
 
@@ -44,13 +42,10 @@ export default function ChatPage() {
 
  await dispatch(sendMessage(msgPayload)).unwrap();
 
-  // Ne pas refetch, ajouter directement le message au state
-  // messagesByUser[currentDoctorId] est déjà géré dans le slice
   setNewMessage("");
 };
 
 
-  // Upload image/fichier
   const handleUpload = async (e) => {
     if (!selectedDoctor) return;
     const file = e.target.files[0];
@@ -65,18 +60,27 @@ export default function ChatPage() {
     dispatch(fetchMessages(selectedDoctor?.user?.id));
   };
 
-  // Extraire les docteurs uniques à partir des rendez-vous
   const doctors = appointments
     .map((appt) => appt.doctor)
     .filter((doc, index, self) => index === self.findIndex((d) => d.id === doc.id));
 
   const selectedUserId = selectedDoctor?.user?.id;
 
-  // Messages filtrés pour le docteur sélectionné
+
  const msgs =
   selectedUserId && Array.isArray(messagesByUser[selectedUserId])
     ? messagesByUser[selectedUserId]
     : [];
+  const formatTime = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+};
+useEffect(() => {
+  if (selectedDoctor) {
+    dispatch(fetchMessages(selectedDoctor.user.id));
+    dispatch(markMessagesAsRead(selectedDoctor.user.id)); 
+  }
+}, [dispatch, selectedDoctor]);
 
   return (
     <div className="min-h-screen">
@@ -87,7 +91,7 @@ export default function ChatPage() {
       </header>
 
       <div className="flex h-[85vh] max-w-7xl mx-auto mt-6 shadow-2xl rounded-xl overflow-hidden bg-white">
-        {/* Sidebar : Docteurs */}
+       
         <aside className="w-64 bg-gray-50 p-4 border-r border-gray-200 overflow-y-auto">
           <h2 className="text-lg font-semibold mb-4">My Doctors</h2>
           <ul className="space-y-3">
@@ -106,7 +110,7 @@ export default function ChatPage() {
                     className="w-12 h-12 rounded-full object-cover shadow-sm"
                   />
                 ) : (
-                  <FaUserDoctor className="w-12 h-12 text-sky-400" />
+                  <FaUserDoctor className="w-12 h-12 text-sky-600" />
                 )}
                 <div className="flex flex-col">
                   <span className="text-gray-800">{doc.user.name}</span>
@@ -119,7 +123,7 @@ export default function ChatPage() {
 
         {/* Chat Area */}
         <main className="flex-1 flex flex-col bg-gray-50">
-          <header className="flex items-center justify-between p-4 border-b bg-white shadow-sm">
+          <header className="flex items-center justify-between p-4 border-b border-sky-600 bg-white shadow-sm">
             <div>
               <h3 className="text-xl font-bold">
                 {selectedDoctor?.user.name || "Select a doctor"}
@@ -142,8 +146,8 @@ export default function ChatPage() {
                 <div
                   className={`p-3 rounded-2xl max-w-xs shadow-md break-words ${
                     msg.sender_id === currentUser.id
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-800 border border-gray-200"
+                      ? "bg-sky-600 text-white"
+                      : "bg-gray-200 text-gray-800 border border-gray-200"
                   }`}
                 >
                   {msg.type === "text" && <p>{msg.message}</p>}
@@ -163,14 +167,19 @@ export default function ChatPage() {
                       Download the file
                     </a>
                   )}
+                  {msg.created_at && (
+                    <span className="text-xs opacity-70 block mt-1 text-right">
+                      {formatTime(msg.created_at)}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
-
+            
             <div ref={chatRef} />
           </div>
 
-          {/* Input */}
+        
           <div className="p-4 border-t border-gray-200 flex items-center gap-3 bg-white sticky bottom-0 shadow-inner">
             <input type="file" onChange={handleUpload} className="hidden" id="fileUpload" />
             <label
