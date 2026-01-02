@@ -28,6 +28,7 @@ class ContactController extends Controller
     }
     public function index(){
         $contacts=Contact::all();
+        $this->authorize('view',$contacts);
         return response()->json(['contacts'=>$contacts]);
     }
     public function markAllRead()

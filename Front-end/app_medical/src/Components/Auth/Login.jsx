@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/slices/Auth/authSlice";
 import { toast } from 'sonner';
-import { Toaster } from 'sonner';
 
 function Login() {
   const navigate = useNavigate();
@@ -98,7 +97,7 @@ useEffect(() => {
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          
 
           <button
             type="submit"

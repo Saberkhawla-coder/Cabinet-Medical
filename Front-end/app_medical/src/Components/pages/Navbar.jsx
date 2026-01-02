@@ -3,6 +3,8 @@ import { User, LogOut, MessageCircle } from "lucide-react";
 import { Link , useNavigate} from 'react-router-dom'
 import { logoutUser } from "../../redux/slices/Auth/authSlice";
 import { useSelector, useDispatch} from 'react-redux';
+import { toast } from 'sonner';
+
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
     const { messagesByUser } = useSelector((state) => state.messages);
@@ -24,6 +26,7 @@ function Navbar() {
   const dispatch=useDispatch();
   
  const handleLogout = async () => {
+   toast.success(`You have been logged out successfully. See you soon, ${user?.name}! 👋`);
   await dispatch(logoutUser());
   navigate("/login");
 };

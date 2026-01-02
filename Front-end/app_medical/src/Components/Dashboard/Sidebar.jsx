@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LogOut, LayoutDashboard,Users, Stethoscope,MessageCircle,CalendarHeart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/slices/Auth/authSlice";
-
+import { toast } from 'sonner';
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,6 +13,7 @@ function Sidebar() {
   const { messagesByUser } = useSelector((state) => state.messages);
   const currentUser = useSelector((state) => state.auth.user);
  const handleLogout = async () => {
+   toast.success(`You have been logged out successfully.`);
   await dispatch(logoutUser());
   navigate("/login");
 };

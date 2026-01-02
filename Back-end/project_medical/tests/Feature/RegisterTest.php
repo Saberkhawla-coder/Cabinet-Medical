@@ -18,7 +18,7 @@ class RegisterTest extends TestCase
     {
         $response = $this->postJson('/api/register', [
             'name' => 'Saber',
-            'email' => 'saber@example.com',
+            'email' => 'saber45@example.com',
             'password' => '123456',
             'password_confirmation' => '123456',
         ]);
@@ -30,7 +30,7 @@ class RegisterTest extends TestCase
                  ]);
 
         $this->assertDatabaseHas('users', [
-            'email' => 'saber@example.com',
+            'email' => 'saber45@example.com',
         ]);
     }
 

@@ -16,6 +16,9 @@ import doctorPatientsReducer from "./slices/Doctors/doctorPatients"
 import updateDoctorReducer from './slices/Doctors/updateDoctorSlice'
 import deleteDoctorSlice from './slices/Doctors/deleteDoctorSlice'
 import createDoctorSlice from './slices/Doctors/addDoctors'
+import deletePatientSlice  from "./slices/Patients/deletePatientsSlice";
+
+
 export const store=configureStore({
     reducer:{
         auth:authReducer,
@@ -35,6 +38,7 @@ export const store=configureStore({
         updateDoctor: updateDoctorReducer,
         deleteDoctor:deleteDoctorSlice,
         createDoctor:createDoctorSlice,
+        deletePatient:deletePatientSlice
     }
 })
 

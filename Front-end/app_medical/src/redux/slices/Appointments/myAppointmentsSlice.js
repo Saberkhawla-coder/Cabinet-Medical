@@ -8,9 +8,13 @@ export const fetchMyAppointments = createAsyncThunk(
       const res = await api.get("/appointments/my");
       return res.data;
     } catch (err) {
-      return rejectWithValue("Cannot load appointments: " + err.message);
-    }
-  }
+      if (err.response?.status === 403) {
+        return rejectWithValue("Accès interdit");
+      }
+      return rejectWithValue(
+        err.response?.data?.message || "Erreur lors du chargement des rendez-vous"
+      );
+    }}
 );
 
 export const cancelAppointment = createAsyncThunk(
