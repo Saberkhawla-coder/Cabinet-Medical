@@ -22,12 +22,14 @@ class DoctorController extends Controller
     public function my() {
     $userId = Auth::id();
     $doctor = Doctor::with('user')->where('user_id', $userId)->first();
+    
     if (!$doctor) {
         return response()->json([
             'error' => 'No doctor found',
             'user_id' => $userId
         ], 404);
     }
+    
     return response()->json($doctor);
 }
    public function store(Request $request)
@@ -88,7 +90,7 @@ class DoctorController extends Controller
     public function update(Request $request, $id)
 {
     $doctor = Doctor::findOrFail($id);
-
+    $this->authorize('update',$doctor);
     $validateForm = $request->validate([
         'speciality' => 'sometimes|string|max:255',
         'img' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
@@ -118,13 +120,16 @@ class DoctorController extends Controller
 
     public function destroy($id)
     {
+       
         $doctor = Doctor::findOrFail($id);
+        $this->authorize('delete', $doctor);
         $doctor->delete();
 
         return response()->json([
             'message' => 'Doctor supprimé avec succès'
         ]);
     }
+
     public function myPatients()
 {
     $doctor = Doctor::where('user_id', Auth::id())->first();

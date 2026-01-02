@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Edit, Trash2, Mail, Phone, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchAllPatients } from "../../../../redux/slices/Patients/patientsSlice";
+import { deletePatient } from "../../../../redux/slices/Patients/deletePatientsSlice";
+import { toast } from "sonner";
+import UpdatePatientModel from "./UpdatePatientModel";
+
 
 function PatientTable() {
   const { loading, error, patients } = useSelector((state) => state.patients);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const [search,setSearch]=useState('')
   const itemsPerPage = 5;
 
@@ -19,6 +25,23 @@ function PatientTable() {
   useEffect(() => {
     dispatch(fetchAllPatients());
   }, [dispatch]);
+
+const handleDelete = async (patient) => {
+  const confirm = window.confirm(
+    `Are you sure you want to delete ${patient.user?.name}?`
+  );
+  if (!confirm) return;
+
+  try {
+    await dispatch(deletePatient(patient.id)).unwrap();
+    toast.success("Patient deleted successfully");
+    dispatch(fetchAllPatients()); 
+  } catch (err) {
+    console.log(err)
+    toast.error("Failed to delete patient");
+  }
+};
+
 
   if (loading) {
     return (
@@ -45,7 +68,7 @@ function PatientTable() {
           />
         </div>
       </div>
-
+    
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
@@ -90,10 +113,13 @@ function PatientTable() {
                   </p>
                 </td>
                 <td className="py-5 px-6 flex space-x-3">
-                  <button className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-300">
-                    <Edit className="w-5 h-5" />
+                  <button onClick={() => {
+                      setSelectedPatient(patient);
+                      setIsModalOpen(true);
+                    }} className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-300">
+                                      <Edit className="w-5 h-5" />
                   </button>
-                  <button className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-300">
+                  <button onClick={() => handleDelete(patient)} className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-300">
                     <Trash2 className="w-5 h-5" />
                   </button>
                 </td>
@@ -101,7 +127,8 @@ function PatientTable() {
             ))}
           </tbody>
         </table>
-
+        <UpdatePatientModel  patient={selectedPatient}  open={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}/>
         <div className="flex justify-end items-end mt-8">
           <div className="flex items-center gap-2 px-4 py-2 ">
             <button

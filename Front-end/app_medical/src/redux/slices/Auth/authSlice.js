@@ -8,9 +8,16 @@ export const loginUser = createAsyncThunk(
     try {
       const res = await api.post("/login", formData);
       return res.data;
-    } catch (err) {
-      return rejectWithValue(`Email ou mot de passe incorrect ${err}`);
-    }
+    }catch(err){
+  if (err.response?.status === 401) {
+    return rejectWithValue("Email ou mot de passe incorrect");
+  }
+
+  return rejectWithValue(
+    err.response?.data?.message || "Erreur serveur"
+  );
+}
+
   }
 );
 export const logoutUser = createAsyncThunk(

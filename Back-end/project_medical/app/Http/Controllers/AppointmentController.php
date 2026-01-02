@@ -12,6 +12,7 @@ class AppointmentController extends Controller
   
     public function index()
     {
+        $this->authorize('viewAny', Appointment::class);
         $appointments = Appointment::with('doctor.user', 'patient.user')->get();
         return response()->json($appointments);
     }
@@ -67,7 +68,7 @@ class AppointmentController extends Controller
         ], 201);
     }
 
-    // Get appointments of the logged-in patient
+    
     public function my()
     {
         $user = Auth::user();
@@ -97,7 +98,7 @@ class AppointmentController extends Controller
 
         $user = Auth::user();
 
-        // Patients can only cancel their own appointments
+        
         if ($user->role === 'patient') {
             $patient = $user->patient;
             if ($appointment->patient_id !== $patient->id) {
@@ -145,7 +146,7 @@ class AppointmentController extends Controller
 
         $user = Auth::user();
 
-        // Only admin or doctor can delete
+        
         if ($user->role === 'patient') {
             return response()->json(['message' => 'Not authorized'], 403);
         }

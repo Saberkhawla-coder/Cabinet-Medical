@@ -32,10 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-
+ Route::get('/doctors', [DoctorController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/doctors', [DoctorController::class, 'index']);
     Route::post('/doctors', [DoctorController::class, 'store']);
     Route::put('/doctors/{id}', [DoctorController::class, 'update']);
     Route::delete('/doctors/{id}', [DoctorController::class, 'destroy']);
@@ -55,8 +54,13 @@ Route::post('/contact', [ContactController::class, 'send']);
 Route::get('/contacts', [ContactController::class, 'index']);
 Route::post('/contacts/read-all', [ContactController::class, 'markAllRead']);
 
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/patients', [patientController::class, 'index']);
+    Route::delete('/patients/{id}', [patientController::class, 'destroy']);
+    Route::post('patients', [PatientController::class, 'store']);
+    Route::put('patients/{id}', [PatientController::class, 'update']);
+});
 
-Route::get('/patients', [patientController::class, 'index']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -67,8 +71,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy']);
 });
 
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::get('/messages/{doctorId}', [MessageController::class, 'getMessages']);
-//     Route::post('/messages', [MessageController::class, 'sendMessage']);
-// });
 
