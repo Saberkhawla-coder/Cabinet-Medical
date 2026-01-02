@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DoctorCreated;
 use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DoctorController extends Controller
 {
@@ -14,6 +17,8 @@ class DoctorController extends Controller
         $doctors = Doctor::with('user')->get();
         return response()->json(['doctors' => $doctors]);
     }
+
+
     public function my() {
     $userId = Auth::id();
     $doctor = Doctor::with('user')->where('user_id', $userId)->first();
@@ -25,32 +30,59 @@ class DoctorController extends Controller
     }
     return response()->json($doctor);
 }
-    public function store(Request $request)
+   public function store(Request $request)
     {
         
-        $validateForm = $request->validate([
-            'user_id' => 'required|exists:users,id',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
             'speciality' => 'required|string|max:255',
             'img' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'start_time' => 'required',
             'end_time' => 'required',
-            'slot_duration' => 'required|integer',
+            'slot_duration' => 'integer',
             'is_active' => 'boolean',
         ]);
+        $tempPassword = Str::random(8);
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($tempPassword),
+            'role'=>'doctor',
+        ]);
 
+       
+        $imgPath = null;
         if ($request->hasFile('img')) {
-        $file = $request->file('img');
-        $filename = time().'_'.$file->getClientOriginalName();
-        $file->storeAs('public/doctors', $filename);
-        $validateForm['img'] = 'doctors/'.$filename;
-    }
-        $doctor = Doctor::create($validateForm);
+            $file = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/doctors', $filename);
+            $imgPath = 'doctors/' . $filename;
+        }
 
+      
+        $doctor = Doctor::create([
+            'user_id' => $user->id,
+            'speciality' => $validatedData['speciality'],
+            'img' => $imgPath,
+            'start_time' => $validatedData['start_time'],
+            'end_time' => $validatedData['end_time'],
+            'slot_duration' => $validatedData['slot_duration'],
+            'is_active' => $validatedData['is_active'] ?? true,
+        ]);
+
+        
+        $doctor->load('user');
+        event(new DoctorCreated($doctor, $tempPassword));
+        
         return response()->json([
             'message' => 'Doctor créé avec succès',
             'doctor' => $doctor
         ], 201);
     }
+    
+
 
     
     public function update(Request $request, $id)

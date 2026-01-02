@@ -22,7 +22,7 @@ class PatientFactory extends Factory
             'role' => 'patient'
             ])->id,
             'phone' => fake()->phoneNumber(),
-            'date_of_birth' => fake()->date(),
+            'birth_date' => fake()->date(),
             ];
     }
 }

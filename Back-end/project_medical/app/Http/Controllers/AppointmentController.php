@@ -36,8 +36,9 @@ class AppointmentController extends Controller
         if (!$patient) {
             $patient = Patient::create([
                 'user_id' => $user->id,
-                'phone' => '0000000000',
-                'date_of_birth' => now()->format('Y-m-d')
+                'phone' =>  $request->phone,
+                'date_birth' => $request->date_birth,
+                'genre'=>$request->genre
             ]);
         }
 

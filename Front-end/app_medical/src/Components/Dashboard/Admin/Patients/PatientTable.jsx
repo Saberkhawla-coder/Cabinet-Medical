@@ -6,11 +6,14 @@ import { fetchAllPatients } from "../../../../redux/slices/Patients/patientsSlic
 function PatientTable() {
   const { loading, error, patients } = useSelector((state) => state.patients);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search,setSearch]=useState('')
   const itemsPerPage = 5;
+
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
-  const currentPatients = patients.slice(indexFirst, indexLast);
-  const totalPages = Math.ceil(patients.length / itemsPerPage);
+  const filterNameEmail=patients.filter((p)=>p?.user?.name.toLowerCase().includes(search.toLowerCase())|| p?.user?.email.includes(search))
+  const currentPatients = filterNameEmail.slice(indexFirst, indexLast);
+  const totalPages = Math.ceil(filterNameEmail.length / itemsPerPage);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -35,6 +38,8 @@ function PatientTable() {
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
+            value={search}
+            onChange={(e)=>setSearch(e.target.value)}
             placeholder="Search patient by name, surname, email..."
             className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
           />

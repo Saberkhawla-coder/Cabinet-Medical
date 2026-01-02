@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from "react";
 import Footer from "../Footer";
 import { fetchAllDoctors } from "../../../redux/slices/Doctors/allDoctors";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useNavigate } from "react-router";
 
 function AllMed() {
    const dispatch = useDispatch();
+   const navigate=useNavigate()
   const { doctors, loading, error } = useSelector(
     (state) => state.doctors
   );
@@ -15,7 +16,7 @@ function AllMed() {
   }, [dispatch]);
 
   const scrollRef = useRef(null);
-
+  
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -300, behavior: "auto" });
@@ -103,9 +104,12 @@ function AllMed() {
                 <div className="p-6 text-center">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{doctor.user?.name}</h3>
                   <p className="text-gray-600 mb-4">{doctor.speciality}</p>
-                  <button className="inline-flex items-center cursor-pointer gap-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300">
-                    Book Now
-                  </button>
+                  <button
+                      onClick={() => navigate("/bookAppointment", { state: { doctorId: doctor.id } })}
+                      className="inline-flex items-center cursor-pointer gap-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-3 rounded-full font-semibold"
+                    >
+                      Book Now
+                    </button>
                 </div>
                 <div className="h-1 bg-gradient-to-r from-blue-500 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </div>

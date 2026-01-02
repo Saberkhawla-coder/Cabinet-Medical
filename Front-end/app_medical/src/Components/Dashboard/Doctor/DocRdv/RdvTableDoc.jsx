@@ -10,14 +10,16 @@ export default function RdvTableDoc() {
   const { appointments: myAppointments = [], loading } = useSelector(
     (state) => state.myAppointmentsDoc
   );
-
+  
+  
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
-  const currentMyAppointments = myAppointments.slice(indexFirst, indexLast);
-  const totalPages = Math.ceil(myAppointments.length / itemsPerPage);
+  const filtredByName=myAppointments.filter((p)=>p?.patient?.user?.name.toLowerCase().includes(search.toLowerCase()))
+  const currentMyAppointments = filtredByName.slice(indexFirst, indexLast);
+  const totalPages = Math.ceil(filtredByName.length / itemsPerPage);
 
   useEffect(() => {
     dispatch(fetchMyDoctorAppointments());
@@ -48,7 +50,6 @@ export default function RdvTableDoc() {
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
-            setCurrentPage(1);
           }}
           className="border border-gray-300 rounded-lg px-4 py-2 w-80 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
         />

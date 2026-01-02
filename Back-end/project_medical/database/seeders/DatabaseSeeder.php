@@ -25,18 +25,18 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@cabinet.com',
-            'role' => 'admin',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Admin',
+        //     'email' => 'admin@cabinet.com',
+        //     'role' => 'admin',
+        // ]);
 
         // Secrétaire
-        User::factory()->create([
-            'name' => 'Secrétaire',
-            'email' => 'secretariat@cabinet.com',
-            'role' => 'secretaire',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Secrétaire',
+        //     'email' => 'secretariat@cabinet.com',
+        //     'role' => 'secretaire',
+        // ]);
 
         // Doctors
         Doctor::factory(5)->create();

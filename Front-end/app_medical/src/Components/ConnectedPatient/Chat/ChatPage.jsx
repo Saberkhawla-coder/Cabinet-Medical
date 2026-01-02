@@ -124,10 +124,15 @@ useEffect(() => {
         {/* Chat Area */}
         <main className="flex-1 flex flex-col bg-gray-50">
           <header className="flex items-center justify-between p-4 border-b border-sky-600 bg-white shadow-sm">
-            <div>
+            <div> 
+              <div className="flex items-center gap-2 text-sky-600">
+                 <FaUserDoctor size={25} className=" text-sky-600" />
               <h3 className="text-xl font-bold">
+               
                 {selectedDoctor?.user.name || "Select a doctor"}
               </h3>
+              </div>
+             
               <p className="text-sm text-gray-500">{selectedDoctor?.specialty}</p>
             </div>
           </header>

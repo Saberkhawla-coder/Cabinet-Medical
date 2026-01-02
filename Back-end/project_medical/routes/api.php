@@ -32,13 +32,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::get('/doctors', [DoctorController::class, 'index']);
-Route::post('/doctors', [DoctorController::class, 'store']);
-Route::patch('/doctors/{id}', [DoctorController::class, 'update']);
-Route::delete('/doctors/{id}', [DoctorController::class, 'destroy']);
-Route::middleware('auth:sanctum')->get('/doctor/my', [DoctorController::class,'my']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/doctors', [DoctorController::class, 'index']);
+    Route::post('/doctors', [DoctorController::class, 'store']);
+    Route::put('/doctors/{id}', [DoctorController::class, 'update']);
+    Route::delete('/doctors/{id}', [DoctorController::class, 'destroy']);
     Route::get('/doctor/my', [DoctorController::class, 'my']);
     Route::get('/doctor/patients', [DoctorController::class, 'myPatients']);
     Route::get('/doctor/appointments', [DoctorController::class, 'myAppointments']);
@@ -49,7 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/chat/messages/{id}', [MessageController::class,'getMessages']);
     Route::post('/chat/send', [MessageController::class,'sendMessage']);
     Route::post('/chat/mark-read/{userId}', [MessageController::class, 'markAsRead']);
-
 });
 
 Route::post('/contact', [ContactController::class, 'send']);
