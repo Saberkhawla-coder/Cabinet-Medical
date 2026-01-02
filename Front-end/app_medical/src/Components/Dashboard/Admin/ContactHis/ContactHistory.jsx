@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
+import {Search} from 'lucide-react'
 import { fetchAllContact } from '../../../../redux/slices/Contact/allContact';
 
 function ContactHistory() {
   const { loading, contacts, error } = useSelector((state) => state.contacts);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search,setSearch]=useState('')
   const itemsPerPage = 5;
 
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
-  const currentMessages = contacts.slice(indexFirst, indexLast);
-  const totalPages = Math.ceil(contacts.length / itemsPerPage);
+  const filterByNameEmail=contacts.filter((c)=>c?.name.toLowerCase().includes(search.toLowerCase()))
+  const currentMessages = filterByNameEmail.slice(indexFirst, indexLast);
+  const totalPages = Math.ceil(filterByNameEmail.length / itemsPerPage);
 
   const dispatch = useDispatch();
 
@@ -32,8 +35,20 @@ function ContactHistory() {
   }
 
   return (
-    <div className="m-8">
-      <h1 className="text-2xl font-bold mb-6">Contact History</h1>
+    <div className=" bg-white p-4 rounded-xl ">
+    <div className="relative max-w-md m-4 ml-auto">
+    <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+    <input
+      type="text"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search a contact by name..."
+      className="w-full pr-10 pl-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 "
+    />
+  </div>
+
+
+
       <div className="overflow-x-auto bg-white shadow rounded-xl">
         <table className="w-full">
           <thead>

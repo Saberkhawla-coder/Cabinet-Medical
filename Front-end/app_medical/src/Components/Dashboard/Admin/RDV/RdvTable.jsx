@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchappointments } from "../../../../redux/slices/Appointments/appointmentsSlice";
-import { Eye, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { deleteAappoitment } from "../../../../redux/slices/Appointments/CrudAppSlice";
 import UpdateRdvModal from "./UpdateRdvModal";
 
@@ -9,6 +9,7 @@ function RdvTable() {
     const [currentPage, setCurrentPage]=useState(1) 
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [search,setSearch]=useState('')
     const dispatch = useDispatch();
    
     const { appointments, loading } = useSelector(
@@ -18,8 +19,9 @@ function RdvTable() {
     const itemsPerPage=5;
     const indexLast=currentPage * itemsPerPage;
     const indexFirst=indexLast - itemsPerPage;
+    const FilterByname=appointments.filter((app)=>app?.status.toLowerCase().includes(search.toLowerCase()))
     const totalPages= Math.ceil(appointments.length/itemsPerPage);
-    const CurrentAppointments=appointments.slice(indexFirst, indexLast);
+    const CurrentAppointments=FilterByname.slice(indexFirst, indexLast);
 
     const handleEdit = (appointment) => {
         setSelectedAppointment(appointment);
@@ -51,12 +53,18 @@ function RdvTable() {
     }
 
     return (
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-            <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-800">
-                    Appointment List
-                </h2>
-            </div>
+        <div className="bg-white p-4 rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+            
+          <div className="relative max-w-md my-4 ml-auto">
+        <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by Status..."
+          className="w-full pr-10 pl-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 "
+        />
+</div>
 
             <div className="overflow-x-auto">
                 <UpdateRdvModal
