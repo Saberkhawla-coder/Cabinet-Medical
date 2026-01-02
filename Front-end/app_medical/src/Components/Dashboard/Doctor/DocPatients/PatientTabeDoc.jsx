@@ -7,11 +7,14 @@ function PatientTableDoc() {
     const { loading, error, patients: myPatients } = useSelector(state => state.myPatients);
     
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch]=useState('');
     const itemsPerPage = 5;
     const indexLast = currentPage * itemsPerPage;
     const indexFirst = indexLast - itemsPerPage;
-    const currentPatients = myPatients.slice(indexFirst, indexLast);
-    const totalPages = Math.ceil(myPatients.length / itemsPerPage);
+    const filtredByName=myPatients.filter((p)=>p?.user?.name.toLowerCase().includes(search.toLowerCase())|| p?.user?.email.toLowerCase().includes(search.toLowerCase()))
+    const currentPatients = filtredByName.slice(indexFirst, indexLast);
+    const totalPages = Math.ceil(filtredByName.length / itemsPerPage);
+    
     
     const dispatch = useDispatch();
     useEffect(() => {
@@ -37,6 +40,8 @@ function PatientTableDoc() {
                     <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
                         type="text"
+                        value={search}
+                        onChange={(e)=>setSearch(e.target.value)}
                         placeholder="Search patient by name, email..."
                         className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                     />

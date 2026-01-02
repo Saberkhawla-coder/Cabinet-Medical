@@ -42,13 +42,13 @@ function Search() {
         )}
       </div>):(   
         <>  
-        <MessageCircle size={18} />
+        <MessageCircle size={22} />
           
           {Object.values(messagesByUser || {})
             .flat()
             .filter(msg => msg.receiver_id === currentUser.id && msg.is_read === 0)
             .length > 0 && (
-              <span className="absolute right-5 bg-[#DBF5F3] text-blue-600 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+              <span className="absolute top-8 right-8 bg-[#DBF5F3] text-blue-600 text-xs w-5 h-5 rounded-full flex items-center justify-center">
                 {Object.values(messagesByUser || {})
                   .flat()
                   .filter(msg => msg.receiver_id === currentUser.id && msg.is_read === 0)

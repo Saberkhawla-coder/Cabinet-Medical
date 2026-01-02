@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Plus, User, Calendar, Download } from 'lucide-react';
 import DoctorsTable from './DoctorsTable';
 import { useSelector } from 'react-redux';
+import AddDocModel from './AddDocModel';
 
 function DoctorsCard() {
   const { doctors } = useSelector((state) => state.doctors);
   const { appointments } = useSelector((state) => state.appointments);
-
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const now = new Date();
   const startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - now.getDay());
@@ -33,7 +34,7 @@ function DoctorsCard() {
           <h1 className="text-3xl font-bold text-gray-900">Doctors Management</h1>
           <p className="text-gray-600 mt-2">View and manage all doctors in your clinic</p>
         </div>
-        <button className="mt-4 md:mt-0 flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+        <button  onClick={() => setIsAddModalOpen(true)} className="mt-4 md:mt-0 flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
           <Plus className="w-5 h-5 mr-2" />
           New Doctor
         </button>
@@ -70,7 +71,7 @@ function DoctorsCard() {
               <Calendar className="w-6 h-6 text-orange-600" />
             </div>
             <div className="ml-4">
-              <p className="text-gray-500 text-sm">Appointments This Week</p>
+              <p className="text-gray-500 text-sm">AppointmentsThisWeek</p>
               <p className="text-2xl font-bold text-gray-900">{appointmentsThisWeek}</p>
             </div>
           </div>
@@ -88,6 +89,10 @@ function DoctorsCard() {
           </div>
         </div>
       </div>
+       <AddDocModel
+        open={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
 
       <DoctorsTable />
     </div>

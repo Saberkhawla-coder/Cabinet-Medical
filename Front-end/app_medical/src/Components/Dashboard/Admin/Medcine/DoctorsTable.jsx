@@ -2,17 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { Eye, Edit, Trash2, Mail, Phone, Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchAllDoctors } from '../../../../redux/slices/Doctors/allDoctors';
 import { useDispatch, useSelector } from 'react-redux';
+import UpdateDocModel from './UpdateDocModel';
+import { deleteDoctor, resetDeleteDoctor } from "../../../../redux/slices/Doctors/deleteDoctorSlice";
+import { toast } from "sonner";
 
 function DoctorsTable() {
   const { doctors, loading } = useSelector((state) => state.doctors);
+  const [search,setSearch]=useState('')
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [specialtyFilter, setSpecialtyFilter] = useState('All');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+      const filteredDoctors = doctors.filter(doc => {
+        const matchesSearch =
+          doc?.user?.name.toLowerCase().includes(search.toLowerCase()) ||
+          doc?.user?.email.toLowerCase().includes(search.toLowerCase());
+
+        const matchesSpecialty =
+          specialtyFilter === 'All' || doc.speciality === specialtyFilter;
+
+        return matchesSearch && matchesSpecialty;
+      });
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+
+
   const indexLast = currentPage * itemsPerPage;
   const indexFirst = indexLast - itemsPerPage;
-  const currentDoctor = doctors.slice(indexFirst, indexLast);
-  const totalPages = Math.ceil(doctors.length / itemsPerPage);
+  const currentDoctor = filteredDoctors.slice(indexFirst, indexLast) 
+  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage) 
 
   useEffect(() => {
     dispatch(fetchAllDoctors());
@@ -33,6 +53,22 @@ function DoctorsTable() {
     const last = parts[parts.length - 1]?.charAt(0) || '';
     return (first + last).toUpperCase();
   };
+  const handleEdit = (doc) => {
+        setSelectedDoctor(doc);
+        setIsModalOpen(true);
+    };
+    const handleDelete = async (doc) => {
+  if (!window.confirm(`Are you sure you want to delete ${doc.user?.name}?`)) return;
+
+  try {
+    await dispatch(deleteDoctor(doc.id)).unwrap();
+    toast.success("Doctor deleted successfully");
+    dispatch(fetchAllDoctors()); 
+    dispatch(resetDeleteDoctor());
+  } catch (err) {
+    toast.error(err?.message || "Delete failed");
+  }
+};
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
@@ -41,6 +77,8 @@ function DoctorsTable() {
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
+            value={search}
+            onChange={(e)=>setSearch(e.target.value)}
             placeholder="Search a doctor by name, email..."
             className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
           />
@@ -49,16 +87,20 @@ function DoctorsTable() {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
             <Filter className="w-5 h-5 text-gray-500" />
-            <select className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-              <option value="All">All Specialties</option>
-              {doctors.map((doc, id) => (
-                <option key={id} value={doc.speciality}>{doc.speciality}</option>
+            <select value={specialtyFilter}
+                    onChange={(e) => setSpecialtyFilter(e.target.value)} 
+                    className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+             <option value="All">All Specialties</option>
+              {[...new Set(doctors.map(doc => doc.speciality))].map((spec, idx) => (
+                <option key={idx} value={spec}>{spec}</option>
               ))}
             </select>
           </div>
         </div>
       </div>
-
+      <UpdateDocModel open={isModalOpen}
+                      onClose={() => setIsModalOpen(false)}
+                       doctor={selectedDoctor}/>
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
@@ -88,8 +130,8 @@ function DoctorsTable() {
                   <p>{doc.speciality}</p>
                 </td>
                 <td className="py-5 px-6 flex space-x-3">
-                  <button className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-300"><Edit className="w-5 h-5" /></button>
-                  <button className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-300"><Trash2 className="w-5 h-5" /></button>
+                  <button type="button"  onClick={()=>handleEdit(doc)} className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-300"><Edit className="w-5 h-5" /></button>
+                  <button  onClick={() => handleDelete(doc)} className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-300"><Trash2 className="w-5 h-5" /></button>
                 </td>
               </tr>
             ))}
